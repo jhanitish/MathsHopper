@@ -2,7 +2,6 @@
     "name": "math-hopper",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
     "scripts": {
         "build": "webpack --config webpack/prod.js ",
         "start": "webpack-dev-server --config webpack/base.js --open",
@@ -10,13 +9,21 @@
         "deploy": "gh-pages -d dist"
     },
     "dependencies": {
+        "@fontsource/poppins": "^5.0.8",
+        "clsx": "^2.0.0",
         "gsap": "^3.10.4",
         "matter-js": "^0.18.0",
-        "pixi.js": "^6.5.1"
+        "pixi.js": "^6.5.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "styled-components": "^6.1.1"
     },
     "devDependencies": {
+        "@babel/preset-env": "^7.23.3",
+        "@babel/preset-react": "^7.23.3",
         "babel-loader": "^8.2.5",
         "clean-webpack-plugin": "^4.0.0",
+        "cypress": "^13.5.1",
         "file-loader": "^6.2.0",
         "gh-pages": "^6.0.0",
         "html-webpack-plugin": "^5.5.0",

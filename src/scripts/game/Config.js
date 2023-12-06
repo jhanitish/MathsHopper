@@ -16,21 +16,28 @@ export const Config = {
         }
     },
     diamonds: {
-        chance: 0.4,
+        chance: 0.9,
         offset: {
-            min: 100,
-            max: 200
+            min: 210,
+            max: 210
         }
     },
+    clouds: {
+        chance: 0.9,
+        offset: {
+            min: 510,
+            max: 510
+        }
+      },
     platforms: {
         moveSpeed: -1.5,
         ranges: {
             rows: {
                 min: 2,
-                max: 6
+                max: 5
             },
             cols: {
-                min: 3,
+                min: 5,
                 max: 9
             },
             offset: {
@@ -48,6 +55,6 @@ export const Config = {
         }
     },
     scenes: {
-        "Game": GameScene
+        "Game": GameScene,
     }
 };

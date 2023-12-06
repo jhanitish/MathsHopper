@@ -3,14 +3,15 @@ import { App } from "../system/App";
 import { Platform } from "./Platform";
 
 export class Platforms {
-    constructor() {
+    constructor(task,hero) {
         this.platforms = [];
         this.container = new PIXI.Container();
-
+        this.hero = hero
+        this.currentPlatform = 0
         this.createPlatform({
             rows: 4,
             cols: 6,
-            x: 200
+            x: 200,
         });
     }
 
@@ -29,13 +30,13 @@ export class Platforms {
 
     
     createPlatform(data) {
-        const platform = new Platform(data.rows, data.cols, data.x);
+        const platform = new Platform(data.rows, data.cols, data.x,this.hero, this.platforms.length);
         this.container.addChild(platform.container);
         this.platforms.push(platform);
         this.current = platform;
     }
 
-    update() {
+    update(dt) {
         if (this.current.container.x + this.current.container.width < window.innerWidth) {
             this.createPlatform(this.randomData);
         }
@@ -43,6 +44,7 @@ export class Platforms {
         // 06
         this.platforms.forEach(platform => platform.move());
     }
+    
 
     // [14]
     destroy() {

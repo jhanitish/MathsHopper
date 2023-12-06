@@ -4,6 +4,8 @@ import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
 import { Loader } from "./Loader";
 import { ScenesManager } from "./ScenesManager";
+import { generateMathObjectsArray } from '../../utils/generateMaths';
+import { gameState } from './gameState';
 
 class Application {
     run(config) {
@@ -13,15 +15,16 @@ class Application {
         this.config = config;
 
         this.app = new PIXI.Application({resizeTo: window});
-        document.body.appendChild(this.app.view);
+        // document.body.appendChild(this.app.view);
+        document.getElementById('game-canvas').appendChild(this.app.view);
 
         this.loader = new Loader(this.app.loader, this.config);
-        this.loader.preload().then(() => this.start());
+        this.mathsObjectArray = generateMathObjectsArray(gameState.difficulty, gameState.level, 20);
+        this.loader.preload().then(() => this.start("Game"));
 
         this.scenes = new ScenesManager();
         this.app.stage.interactive = true;
         this.app.stage.addChild(this.scenes.container);
-
         // [06]
         this.createPhysics();
     }
@@ -41,8 +44,9 @@ class Application {
         return new PIXI.Sprite(this.res(key));
     }
 
-    start() {
-        this.scenes.start("Game");
+    start(sceneName) {
+        // this.scenes.start("Game");
+        this.scenes.start(sceneName);
     }
 }
 

@@ -3,25 +3,77 @@ import * as PIXI from "pixi.js";
 import { App } from '../system/App';
 
 export class Hero {
-    constructor() {
+    constructor(problem) {
         this.createSprite();
         this.createBody();
         App.app.ticker.add(this.update, this);
-
+        this.problem = problem
         this.dy = App.config.hero.jumpSpeed;
         this.maxJumps = App.config.hero.maxJumps;
         this.jumpIndex = 0;
         this.score = 0;
+        this.hearts = [];
+        this.maxHearts = 10; // Set a maximum number of hearts
+        this.initializeHearts();
+    }
+
+    initializeHearts() {
+        for (let i = 0; i < this.maxHearts; i++) {
+            const heart = App.sprite("heart"); // Ensure you have a 'heart' sprite
+            heart.scale.set(0.02, 0.02);
+            heart.x = 900 + (heart.width + 5) * i; // Position hearts in a row
+            heart.y = 10; // Position hearts at the top of the screen
+            App.app.stage.addChild(heart);
+            this.hearts.push(heart);
+        }
     }
 
     collectDiamond(diamond) {
-        ++this.score;
+        this.score-=10;
+
         //[13]
         this.sprite.emit("score");
         //[/13]
+        this.updateHearts()
         diamond.destroy();
+        
+
     }
     //[/12]
+    reduceScore(amount) {
+        this.score -= amount;
+        if (this.score < 0) this.score = 0; // Prevent negative score
+        this.updateHearts();
+        // Update score display, if you have one
+    }
+
+    addScore(score){
+        this.score+=score;
+        //[13]
+        this.sprite.emit("score");
+        if(this.score > 50){
+            this.problem.congradulations();
+        }
+    }
+
+    reduceHearts(amount) {
+        // Decrease the score by the specified amount
+        this.score -= amount;
+    
+        // Ensure the score doesn't fall below zero
+        if (this.score < 0) {
+            this.score = 0;
+        }
+    
+        // Update the heart display based on the new score
+        this.updateHearts();
+    }
+
+    updateHearts() {
+        for (let i = 0; i < this.hearts.length; i++) {
+            this.hearts[i].visible = i < this.score;
+        }
+    }
 
     startJump() {
         if (this.platform || this.jumpIndex === 1) {

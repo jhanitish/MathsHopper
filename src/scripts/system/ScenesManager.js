@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import { App } from "./App";
+import { gameState } from "./gameState";
 
 export class ScenesManager {
     constructor() {
@@ -15,6 +16,7 @@ export class ScenesManager {
 
         this.scene = new App.config.scenes[scene]();
         this.container.addChild(this.scene.container);
+        gameState.currentScene = scene;
     }
 
     update(dt) {
@@ -22,4 +24,5 @@ export class ScenesManager {
             this.scene.update(dt);
         }
     }
+
 }
