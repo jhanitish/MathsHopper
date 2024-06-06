@@ -42,16 +42,28 @@ const Levels = ({ user, onBackClick, onStartClick }) => {
                     setActiveLevel(1);
                 } else {
                     setActiveLevel(Number(activeGameState.level) + 1);
+                    if(activeGameState.difficulty === "medium") {
+                        setActiveCard(["easy", "medium"]); 
+                    }
+    
+                    if(activeGameState.difficulty === "hard") {
+                        setActiveCard(["easy", "medium", "hard"]);
+                    }
                 }
             } else {
                 setActiveLevel(activeGameState.level);
-                setActiveCard(activeGameState.difficulty);
+                if(activeGameState.difficulty === "medium") {
+                    setActiveCard(["easy", "medium"]); 
+                }
+
+                if(activeGameState.difficulty === "hard") {
+                    setActiveCard(["easy", "medium", "hard"]);
+                }
             }
             setSelectedNumber(activeGameState.level);
             setSelectedLevel(activeGameState.difficulty);
         }
-    }, [activeGame]);
-
+    }, [activeGame, activeGame.level]);
     useEffect(() => {
         const enableLevelClick = (currlevel) => {
             
@@ -79,17 +91,14 @@ const Levels = ({ user, onBackClick, onStartClick }) => {
             }
         });
         setLevelField([...arr]);
-    }, [activeCard, activeCard.length, levelSelect]);
+    }, [activeCard, activeCard.length, levelSelect, activeLevel]);
     useEffect(() => {
         if(selectedNumbers && levelSelect) {
             setAllowClick(true);
         } else {
             setAllowClick(false);
         }
-    }, [selectedNumbers, levelSelect])
-    useEffect(() => {
-        setSelectedNumber(0);
-    }, [levelSelect]);
+    }, [selectedNumbers, levelSelect]);
     
     const handleMouseEnter = (event) => {
         if(!allowClick) {

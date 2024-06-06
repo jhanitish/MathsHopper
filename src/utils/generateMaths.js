@@ -1,10 +1,25 @@
+/**
+ * This function takes a string of arrays which contain the expected operations. This is in the getOperators function.
+ * 
+ * @param {array} operators This function takes an array of allowed operations.
+ * @returns This function returns the math operators.
+ */
+
 function randomGenerator(operators) {
     return operators[Math.floor(Math.random() * operators.length)];
 }
+
 function percentCalc(percent, number) {
     const currentVal = (percent / 100) * number;
     return ((currentVal+1) / number) * 100;
 }
+/**
+ * This function generates a set of operators and a percentage value based on certain input parameters. 
+ * @param {array} operation This parameter takes an array of allowed operations. 
+ * @param {number} percent This parameter expects a number between 0-100 which represents the percentage of previous operators questions.
+ * @param {number} length The length parameter is how many total questions will be created.
+ * @returns This function returns an object with the ops field being the operators and the per field is the calculated.
+ */
 function getOperators(operation, percent, length) {
     let ops = randomGenerator(['+', '-', '*', '/']);
     let per = 100;
@@ -35,7 +50,13 @@ function getOperators(operation, percent, length) {
   
     return {ops, per};
 }
-  
+
+/**
+ * This function will return a range of mathematical operation based on the difficulty and the types of operators which are expected for a given level.
+ * @param {*} type This parameter represents the difficulty of the game. This expects one of the following as an input: 'EASY', 'MEDIUM' and 'HARD'.
+ * @param {*} operator This parameter takes an array of allowed operations. 
+ * @returns This function returns an array of length 2 with the 0 index representing the minimum number of questions and the 1 index representing the maximum number of questions.
+ */
 function getNumberRange(type, operator) {
     if(type === 'easy') {
       if(operator === '+' || operator === '-') {
@@ -61,11 +82,23 @@ function getNumberRange(type, operator) {
       }
     }
 }
+
+/**
+ * This function generates an array of maths questions.
+ * @param {*} difficulty The difficulty parameter expects the following values 'EASY', 'MEDIUM' or 'HARD'.
+ * @param {*} operation This parameter takes an array of allowed operations. 
+ * @param {*} length The length parameter represents the number of questions which will be created.
+ * @returns An array of objects is returned where the fields of the object are as follows:
+ * - val1 represents represents the minumum range of values.
+ * - val2 represents the maximum range of values.
+ * - exp is the question which will be displayed to the user.
+ * - tans is the correct answer.
+ * - fans is the wrong answer.
+ */
   
 export function generateMathObjectsArray(difficulty, operation, length) {
     const mathObjects = [];
     let percent = 0;
-    console.log(difficulty,operation,length);
     for (let i = 0; i < length; i++) {
       const operatorsCheck = getOperators(operation, percent, length);
       const operator = operatorsCheck.ops;
@@ -105,6 +138,8 @@ export function generateMathObjectsArray(difficulty, operation, length) {
             fans = Math.floor(Math.random() * (2 * fanRange)) - fanRange + tans; 
         } while (fans === tans);
       }
+
+      fans = fans < 0 ? 0 : fans === tans ? parseInt(fans) + 1 : parseInt(fans);
   
       mathObjects.push({ val1, val2, exp, operator, tans, fans });
       

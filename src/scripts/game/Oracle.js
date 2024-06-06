@@ -1,28 +1,35 @@
 import * as PIXI from "pixi.js";
 import { App } from '../system/App';
+import { gameState } from "../system/gameState";
 
+/**
+ * The Oracle class handles all the methods related to the Oracle.
+ */
 export class Oracle {
-    constructor() {
+    /**
+     * This class is responsible for helping the user whenever they are stuck.
+     * @param {object} gameScene This class expects one parameter which is the gameScene object.
+     */
+    constructor(gameScene) {
         this.app = App.app;
         this.image = App.sprite("oracle");
-
-        this.chatContainer = new PIXI.Container();
-        this.chatContainer.visible = false;
-        this.app.stage.addChild(this.chatContainer);
-
-        this.chatBackground = new PIXI.Graphics();
-        this.chatBackground.beginFill(0xFFFFFF); // Background color
-        this.chatBackground.drawRect(0, 0, 300, 300); // Adjust size
-        this.chatBackground.endFill();
-        this.chatContainer.addChild(this.chatBackground);
-
-        this.oracleMessages = [
-            "How's the game going!",
-            "Think maths as your friend!",
-            "Try using different techniques to solve the problem!",
-            // Add more messages here...
-        ];
+        this.gameScene = gameScene;
     }
+
+    /**
+     * This method is responsible for the event handling when users click on the Oracle.
+     */
+    onImageClick() {
+        // this.gameScene.pauseGame(); // Pause the game when chat is opened
+        gameState.isPaused = true;
+        var modal = document.getElementById("OracleScreen");
+        modal.style.display = "block";
+    }
+
+    /**
+     * The addMessageToChat method is responsible for displaying text.
+     * @param {string} message This method expects one parameter which is what will be displayed on the screen.
+     */
 
     addMessageToChat(message) {
         const style = new PIXI.TextStyle({
@@ -38,21 +45,13 @@ export class Oracle {
         this.chatContainer.addChild(text);
     }
 
-    onImageClick() {
-        if (this.chatContainer.visible) {
-            this.chatContainer.visible = false;
-        } else {
-            this.chatContainer.visible = true;
-            this.chatContainer.x = this.image.x - this.chatContainer.width - 10; // Adjust position
-            this.chatContainer.y = this.image.y - this.chatContainer.height;
-
-            // adding random messages
-            const randomIndex = Math.floor(Math.random() * this.oracleMessages.length);
-            const randomMessage = this.oracleMessages[randomIndex];
-            this.addMessageToChat("Oracle says: " + randomMessage);
-        }
-    }
-
+    /**
+     * The createImage method configures the Oracle image so that it can be interactive.
+     * @param {*} x X-axis position.
+     * @param {*} y Y-axis position.
+     * @param {*} width Width of the image.
+     * @param {*} height Height of the image.
+     */
     createImage(x, y, width, height) {
         this.image.interactive = true;
         this.image.buttonMode = true;

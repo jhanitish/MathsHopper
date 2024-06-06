@@ -4,18 +4,7 @@ import { GameScene } from "./GameScene";
 export const Config = {
     loader: Tools.massiveRequire(require["context"]('./../../sprites/', true, /\.(mp3|png|jpe?g)$/)),
     bgSpeed: 2,
-    score: {
-        x: 10,
-        y: 10,
-        anchor: 0,
-        style: {
-            fontFamily: "Verdana",
-            fontWeight: "bold",
-            fontSize: 44,
-            fill: ["#FF7F50"]
-        }
-    },
-    diamonds: {
+    enemies: {
         chance: 0.9,
         offset: {
             min: 210,

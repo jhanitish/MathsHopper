@@ -2,7 +2,9 @@
 import * as PIXI from "pixi.js";
 import { App } from "../system/App";
 
-
+/**
+ * The StartScene class is initial screen that is rendered when the users begin the game. This class is responsible for displaying the initial interface elements.
+ */
 export class StartScene {
     constructor() {
       this.container = new PIXI.Container();
@@ -25,14 +27,4 @@ export class StartScene {
       // Transition to the next scene (e.g., GameScene)
       App.start('Game');
     }
-
-    destroy() {
-        
-    }
-  
-    // Other methods and logic for the start scene
   }
-
-
-// // Call the function to create circles
-// createCircles();

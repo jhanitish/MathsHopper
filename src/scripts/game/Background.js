@@ -1,11 +1,15 @@
 import * as PIXI from "pixi.js";
+import { Sound } from '@pixi/sound';
 import { App } from "../system/App";
+import {gameState} from "../system/gameState";
+import music from "../../sounds/Miles.mp3";
 
 export class Background {
     constructor() {
         this.speed = App.config.bgSpeed;
         this.container = new PIXI.Container();
         this.createSprites();
+        this.sound = this.onSoundStart();
     }
 
     createSprites() {
@@ -38,11 +42,38 @@ export class Background {
     }
 
     update(dt) {
-        const offset = this.speed * dt;
+        if (!gameState.isPaused) { // Only move if isMoving is true
+            const offset = this.speed * dt;
+            this.sprites.forEach(sprite => {
+                this.move(sprite, offset);
+            });
+        }
+    }
 
-        this.sprites.forEach(sprite => {
-            this.move(sprite, offset);
+    onSoundStart() {
+        // Load the sound
+        const sound = Sound.from({
+            url: music,
+            autoPlay: true,
+            loop: true,
+            loaded: function(err, sound) {
+                if (!err) {
+                    console.log('Sound loaded and playing.');
+                } else {
+                    console.error('Error loading sound:', err);
+                }
+            }
         });
+
+        return sound;
+    }
+
+    onSoundStop() {
+        this.sound.stop();
+    }
+
+    toggleMovement() {
+        this.isMoving = !this.isMoving;
     }
 
     destroy() {

@@ -4,7 +4,14 @@ import MyReactApp from './pages';
 import { App } from "./scripts/system/App";
 import { Config } from "./scripts/game/Config";
 import GameOver from './pages/GameOver';
+import OracleUI from './pages/Oracle';
 
+/**
+ * This function will display both the homepage and the game over screen.
+ * These pages are created using react
+ * 
+ * @returns eact page
+ */
 
 const ReactApp = () => {
   const [showStartScene, setShowStartScene] = useState(true);
@@ -27,6 +34,7 @@ const ReactApp = () => {
         <>
           <div id="game-canvas"></div>
           <GameOver toggleScenes={toggleScenes} />
+          <OracleUI />
         </>
       )}
     </>

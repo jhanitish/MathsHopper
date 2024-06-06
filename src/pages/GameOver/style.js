@@ -75,6 +75,7 @@ const Button = styled.button`
     color: #fff;
     box-shadow: 0 4px 6px rgba(10, 10, 10, 10);
     z-index: 10000;
+    cursor: pointer;
 `;
 
 export {

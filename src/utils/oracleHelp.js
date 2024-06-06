@@ -1,3 +1,7 @@
+/**
+ * The following objects contain the subject help that wll be provided by the oracl.
+ */
+
 const addition = {
     def: 'Addition is putting numbers together to find the total.',
     logic1: 'Imagine you have some candies. If you have 2 candies and your friend gives you 3 more, how many candies do you have now? Count them all together to find the answer!',

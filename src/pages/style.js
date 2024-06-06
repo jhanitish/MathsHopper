@@ -4,6 +4,7 @@ const Wrapper = styled.div`
     height: 100vh;
     margin: 10px;
     padding: 10px;
+    position: relative;
 `;
 
 export {
